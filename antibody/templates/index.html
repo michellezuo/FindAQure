@@ -6,39 +6,42 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+  <!-- LOGO SPACE TOP LEFT -->
+  <div class="logo-space">
+    <img src="triallogo.png" alt="Find|A|Qure Logo" style="height: 40px;">
+  </div>
   <div class="container">
-    <h1>&ltFind|A|Qure&gt</h1>
-    <div class="subtitle">
-      Double Grover search over antibodies and docking sites – invisible quantum infrastructure for antibody design.
-    </div>
-
-    {% if error %}
-      <div class="error">{{ error }}</div>
-    {% endif %}
-
-    <form method="post">
-      <label for="antigen_id">Antigen name / ID</label>
-      <input type="text" id="antigen_id" name="antigen_id" placeholder="Influenza_H1N1_HA_Epitope">
-
-      <label for="antigen_seq">Antigen epitope sequence (AA letters)</label>
-      <input type="text" id="antigen_seq" name="antigen_seq"
-             placeholder="KPSKRNGILDSYANNY" required>
-
-      <label for="antibodies">Antibody candidates</label>
-      <div class="small">
-        One per line. Format: <code>Name:SEQUENCE</code> or just <code>SEQUENCE</code> (name will be auto-generated).
-        Example:<br>
-        <code>Ab_H1N1_Control:KPSKRNGILDSYANNY</code><br>
-        <code>Ab_H1N1_Binder1:RDKESNGILDSYANNK</code>
+    <div class="glass-card">
+      <h1>&ltFind|A|Qure&gt</h1>
+      <div class="subtitle">
+        Double Grover search over antibodies and docking sites – 
+        invisible quantum infrastructure for antibody design.
       </div>
-      <textarea id="antibodies" name="antibodies" placeholder="Ab1:KPSKRNGILDSYANNY&#10;Ab2:RDKESNGILDSYANNK"></textarea>
 
-      <button type="submit">Run Double Grover Search</button>
-    </form>
+      {% if error %}
+        <div class="error" style="background: rgba(220, 38, 38, 0.2); border: 1px solid rgba(248, 113, 113, 0.5); padding: 1.25rem; border-radius: 16px; margin-bottom: 1.5rem;">
+          {{ error }}
+        </div>
+      {% endif %}
 
-    <p class="small" style="margin-top:1.5rem;">
-      This is a research demo only and not medical advice.
-    </p>
+      <form method="post">
+        <label for="antigen_id">Antigen name / ID</label>
+        <input type="text" id="antigen_id" name="antigen_id" placeholder="Influenza_H1N1_HA_Epitope">
+
+        <label for="antigen_seq">Antigen epitope sequence (AA letters)</label>
+        <input type="text" id="antigen_seq" name="antigen_seq"
+               placeholder="KPSKRNGILDSYANNY" required>
+
+        <label for="antibodies">Antibody candidates</label>
+        <div style="font-size: 0.9rem; color: #94a3b4; margin-bottom: 0.75rem;">
+          One per line. Format: <code>Name:SEQUENCE</code> or just <code>SEQUENCE</code>
+        </div>
+        <textarea id="antibodies" name="antibodies" placeholder="Ab_H1N1_Control:KPSKRNGILDSYANNY
+Ab_H1N1_Binder1:RDKESNGILDSYANNK"></textarea>
+
+        <button type="submit">Run Double Grover Search</button>
+      </form>
+    </div>
   </div>
 </body>
 </html>
