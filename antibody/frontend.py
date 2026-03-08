@@ -5,6 +5,10 @@ app = Flask(__name__)
 
 FASTAPI_URL = "http://localhost:8000/api/quantum_antibody_search"
 
+@app.route('/how_grovers_works')
+def how_grovers_works():
+    return render_template("how_grovers_works.html")
+
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
