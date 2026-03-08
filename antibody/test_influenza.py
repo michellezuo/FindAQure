@@ -1,0 +1,65 @@
+import requests
+import json
+
+print("🦟 Testing INFLUENZA HEMAGGLUTININ + Double Grover")
+
+# ========================================
+# INFLUENZA HEMAGGLUTININ EPITOPE
+# Real epitope from H1N1 Influenza HA (positions ~150-170)
+# ========================================
+test_data = {
+    "antigen": {
+        "id": "Influenza_H1N1_HA_Epitope",
+        "sequence": "KPSKRNGILDSYANNY"  # Real HA antigenic site Sa
+    },
+    "antibodies": [
+        # GOOD BINDERS (designed to complement HA)
+        {
+            "id": "Ab_H1N1_Binder1", 
+            "sequence": "RDKESNGILDSYANNK"  # Electrostatic match (K→D, R→E)
+        },
+        {
+            "id": "Ab_H1N1_Binder2", 
+            "sequence": "KRNGILDSYANNYPSK"  # Sequence mimic + charge complement
+        },
+        
+        # POOR BINDERS (mismatched charges)
+        {
+            "id": "Ab_H1N1_NonBinder1", 
+            "sequence": "DDDDDDDDDDDDDDDD"  # All negative, repels HA positives
+        },
+        {
+            "id": "Ab_H1N1_NonBinder2", 
+            "sequence": "KKKKKKKKKKKKKKKK"  # All positive, repels HA positives
+        },
+        
+        # NEUTRAL / RANDOM
+        {
+            "id": "Ab_H1N1_Random1", 
+            "sequence": "AGCSRTYQPWEXLZNM"
+        },
+        {
+            "id": "Ab_H1N1_Random2", 
+            "sequence": "HJKLPOIUYTREWQAS"
+        },
+        {
+            "id": "Ab_H1N1_Control", 
+            "sequence": "KPSKRNGILDSYANNY"  # Exact HA copy (should bind well)
+        }
+    ]
+}
+
+print("📤 Sending to Double Grover...")
+response = requests.post("http://localhost:8000/api/quantum_antibody_search", json=test_data)
+result = response.json()
+
+print("\n" + "="*60)
+print("🏆 DOUBLE GROVER RESULTS: Influenza H1N1 HA")
+print("="*60)
+
+for i, ab in enumerate(result['candidate_states']):
+    print(f"{i+1}. {ab['id']:<20} | Q-Prob: {ab['quantum_prob']:.3f} | "
+          f"Score: {ab['classical_score']:.3f} | DockSite: {ab['best_docking_site']}")
+
+print(f"\n🎯 PREDICTED WINNER: {result['candidate_states'][0]['id']}")
+print(f"   Best docking position: {result['candidate_states'][0]['best_docking_site']}")

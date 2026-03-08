@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>QuantumAntibody – Results</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>QuantumAntibody Results</h1>
+    <div class="subtitle">
+      Antigen: <span class="badge">{{ result.antigen_id }}</span><br>
+      Sequence: <code>{{ antigen_seq }}</code>
+    </div>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Antibody</th>
+          <th>Sequence</th>
+          <th>Quantum probability</th>
+          <th>Classical score</th>
+          <th>Best docking site</th>
+          <th>Best docking prob</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for ab in result.candidate_states %}
+        <tr class="{% if loop.index0 == 0 %}row-top{% endif %}">
+          <td>{{ loop.index }}</td>
+          <td>{{ ab.id }}</td>
+          <td><code>{{ ab.sequence }}</code></td>
+          <td>{{ "%.3f"|format(ab.quantum_prob) }}</td>
+          <td>{{ "%.3f"|format(ab.classical_score) }}</td>
+          <td>
+            {% if ab.best_docking_site >= 0 %}
+              {{ ab.best_docking_site }}
+            {% else %}
+              –
+            {% endif %}
+          </td>
+          <td>{{ "%.3f"|format(ab.best_docking_prob) }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <p class="small" style="margin-top:1rem;">
+      Top candidate has the highest quantum probability after Double Grover (outer: antibodies, inner: docking sites).
+    </p>
+
+    <p style="margin-top:1.5rem;">
+      <a href="{{ url_for('index') }}">⟵ Run another search</a>
+    </p>
+  </div>
+</body>
+</html>
