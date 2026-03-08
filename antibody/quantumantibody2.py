@@ -168,9 +168,16 @@ async def get_demo_data():
         "antibodies": [{"id": f"Ab{i}", "sequence": f"PARCDR3_{chr(65+i)}KFD"} for i in range(8)]
     }
 
+
+@app.get("/quantumhowitworks")
+async def how_grovers_works():
+    with open("templates/quantumhowitworks.html", "r") as f:
+        return HTMLResponse(content=f.read())
+
 @app.get("/")
 async def root():
     return {"message": "DOUBLE GROVER QuantumAntibody - HackTJ Ready!", "status": "alive"}
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
+
