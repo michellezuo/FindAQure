@@ -44,7 +44,7 @@
             <div style="background: rgba(30, 27, 75, 0.8); padding: 2rem; border-radius: 24px; border-left: 5px solid #c084fc; margin-bottom: 2rem;">
               <div style="display: flex; justify-content: space-between; font-size: 1.3rem; margin-bottom: 1.5rem;">
                 <span><strong>7 Antibodies × 8 Docking Sites</strong></span>
-                <span style="font-size: 2.5rem; font-weight: 900; color: #10b981;">56 combinations</span>
+                <span style="font-size: 1.5rem; font-weight: 400; color: #10b981;">56 combinations</span>
               </div>
               <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; text-align: center;">
                 <div>
@@ -63,7 +63,7 @@
           </div>
           <div style="padding: 2rem; background: rgba(59, 130, 246, 0.15); border-radius: 24px;">
             <h4 style="color: #60a5fa; margin-bottom: 1.5rem;">Your Demo Numbers:</h4>
-            <p style="font-size: 1.15rem; line-height: 1.8;">
+            <p style="font-size: 1.15rem; line-height: 2; margin-bottom: 1.5rem;">
               Find best antibody-docking pair among <strong>56 possibilities</strong>:<br>
               <br>
               \( N = 7 \) antibodies, \( M = 8 \) docking sites<br>
@@ -89,7 +89,7 @@
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-bottom: 3rem;">
           <div>
             <h3 style="color: #10b981; font-size: 1.8rem;">1. INNER GROVER (Per Antibody)</h3>
-            <p style="font-size: 1.15rem; line-height: 1.7; margin-bottom: 2rem;">
+            <p style="font-size: 1.15rem; line-height: 2; margin-bottom: 1.5rem;">
               For each antibody, search 8 docking sites:
             </p>
             <div style="background: rgba(16, 185, 129, 0.2); padding: 2rem; border-radius: 20px; font-size: 1.1rem;">
@@ -119,21 +119,36 @@
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem;">
             <div>
               <div style="font-size: 1.4rem; font-weight: 800; color: #94a3b4; margin-bottom: 0.5rem;">Initial (Uniform)</div>
-              <code style="font-size: 1.1rem;">[0.35, 0.35, 0.35, 0.35, 0.35, 0.35, 0.35, 0.35]</code>
+              <div>
+                <div style="font-size: 1.4rem; font-weight: 800; color: #94a3b4; margin-bottom: 0.5rem;">
+                    Initial (Uniform)
+                </div>
+                <code style="font-size: 1.1rem; display: block; margin-top: 0.7rem; line-height: 1.8;">
+                    [0.35, 0.35, 0.35, 0.35, 0.35, 0.35, 0.35, 0.35]
+                </code>
+                </div>
             </div>
-            <div>
-              <div style="font-size: 1.4rem; font-weight: 800; color: #c084fc;">After Oracle</div>
-              <code style="font-size: 1.1rem;">[-, -, -, -, <strong>+0.85</strong>, -, +, +]</code>
+                <div>
+                <div style="font-size: 1.4rem; font-weight: 800; color: #c084fc;">After Oracle</div>
+                <code style="font-size: 1.1rem; display: block; margin-top: 0.7rem; line-height: 1.8; padding: 0.7rem 1rem; background: rgba(15, 23, 42, 0.6); border-radius: 10px;">
+                    [-, -, -, -, <strong>+0.85</strong>, -, +, +]
+                </code>
+                </div>
+
+                <div>
+                <div style="font-size: 1.4rem; font-weight: 800; color: #10b981;">After Diffusion</div>
+                <code style="font-size: 1.1rem; display: block; margin-top: 0.7rem; line-height: 1.8; padding: 0.7rem 1rem; background: rgba(15, 23, 42, 0.6); border-radius: 10px;">
+                    [...<strong>0.52 @ pos4</strong>...]
+                </code>
+                </div>
+
+                <div>
+                <div style="font-size: 1.4rem; font-weight: 800; color: #f59e0b;">Final Prob.</div>
+                <code style="font-size: 1.1rem; display: block; margin-top: 0.7rem; line-height: 1.8; padding: 0.7rem 1rem; background: rgba(15, 23, 42, 0.6); border-radius: 10px;">
+                    <strong>52% → Pos 4 wins!</strong>
+                </code>
+                </div>          
             </div>
-            <div>
-              <div style="font-size: 1.4rem; font-weight: 800; color: #10b981;">After Diffusion</div>
-              <code style="font-size: 1.1rem;">[...<strong>0.52 @ pos4</strong>...]</code>
-            </div>
-            <div>
-              <div style="font-size: 1.4rem; font-weight: 800; color: #f59e0b;">Final Prob.</div>
-              <code style="font-size: 1.1rem;"><strong>52% → Pos 4 wins!</strong></code>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -162,7 +177,7 @@
           </div>
           <div>
             <h3 style="color: #eab308; font-size: 1.8rem;">Diffusion Operator</h3>
-            <p style="font-size: 1.15rem; line-height: 1.7;">
+            <p style="font-size: 1.15rem; line-height: 2; margin-bottom: 1.5rem;">
               Reflects across average amplitude:
             </p>
             $$ D|\psi\rangle = 2\langle\psi| s\rangle |s\rangle - |\psi\rangle $$
@@ -195,7 +210,7 @@
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
           <div style="padding: 3rem; background: linear-gradient(135deg, rgba(236, 72, 153, 0.2), rgba(244, 114, 182, 0.15)); border-radius: 28px; border-left: 6px solid #ec4899;">
             <h4 style="color: #ec4899; margin-bottom: 1.5rem;">Geometric Rotation</h4>
-            <p style="font-size: 1.15rem; line-height: 1.7;">
+            <p style="font-size: 1.15rem; line-height: 2; margin-bottom: 1.5rem;"></p>
               Grover = <strong>rotation in amplitude space</strong>:
             </p>
             <ul style="font-size: 1.1rem; line-height: 1.8; margin-top: 1.5rem;">
