@@ -38,10 +38,29 @@
         </div>
         <textarea id="antibodies" name="antibodies" placeholder="Ab_H1N1_Control:KPSKRNGILDSYANNY
 Ab_H1N1_Binder1:RDKESNGILDSYANNK"></textarea>
-
-        <button type="submit">Run Double Grover Search</button>
-      </form>
-    </div>
-  </div>
+      </textarea>
+      
+      <!-- BUTTONS ROW - SIDE BY SIDE -->
+      <div style="display: flex; gap: 1.5rem; justify-content: center; align-items: center; margin-top: 2.5rem; flex-wrap: wrap;">
+        
+        <!-- MAIN SUBMIT BUTTON (left-ish) -->
+        <button type="submit" style="flex: 1; max-width: 500px;">
+          🚀 Run Double Grover Search
+        </button>
+        
+      <!-- HOW IT WORKS BUTTON (VERY slightly lower) -->
+      <a href="{{ url_for('how_grovers_works') }}" 
+        style="display: inline-flex; align-items: center; gap: 0.75rem; 
+                color: #a78bfa; font-weight: 700; font-size: 1.1rem; 
+                text-decoration: none; padding: 1.25rem 2.5rem; 
+                background: rgba(139, 92, 246, 0.2); 
+                border-radius: 999px; border: 2px solid rgba(167, 139, 250, 0.5); 
+                transition: all 0.3s ease; white-space: nowrap;
+                transform: translateY(20px);">
+        🔬 How It Works
+      </a>
+        
+      </div>
+    </form>
 </body>
 </html>

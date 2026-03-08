@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>How Grover's Works – QuantumAntibody</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <!-- LOGO SPACE -->
+  <div class="logo-space">
+    QUANTUM<br>ANTIBODY
+  </div>
+
+  <div class="container">
+    <div class="glass-card" style="padding: 5rem 4rem; max-width: 1200px;">
+      <div style="text-align: center; margin-bottom: 4rem;">
+        <h1 style="font-size: 3.5rem; margin-bottom: 1rem;">How Grover's Works</h1>
+        <div class="subtitle" style="font-size: 1.4rem; max-width: none;">
+          Double Grover: Outer (antibodies) + Inner (docking sites) = <strong>√N × √M speedup</strong>
+        </div>
+      </div>
+
+      <!-- NAVIGATION -->
+      <div style="display: flex; gap: 1rem; justify-content: center; margin-bottom: 4rem; flex-wrap: wrap;">
+        <a href="{{ url_for('index') }}" class="button-secondary" style="background: rgba(139, 92, 246, 0.2); border: 2px solid rgba(167, 139, 250, 0.5); color: #a78bfa; text-decoration: none; padding: 1rem 2.5rem; border-radius: 999px; font-weight: 700;">← Back to Demo</a>
+      </div>
+
+      <!-- SECTION 1: THE PROBLEM -->
+      <section style="margin-bottom: 6rem;">
+        <h2 style="font-size: 2.5rem; 
+                background: linear-gradient(135deg, #c084fc, #60a5fa); 
+                background-clip: text;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent; 
+                margin-bottom: 2rem;">
+        🎯 The Unstructured Search Problem
+        </h2>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+          <div>
+            <h3 style="color: #c084fc; font-size: 1.8rem; margin-bottom: 1.5rem;">Classical vs Quantum</h3>
+            <div style="background: rgba(30, 27, 75, 0.8); padding: 2rem; border-radius: 24px; border-left: 5px solid #c084fc; margin-bottom: 2rem;">
+              <div style="display: flex; justify-content: space-between; font-size: 1.3rem; margin-bottom: 1.5rem;">
+                <span><strong>7 Antibodies × 8 Docking Sites</strong></span>
+                <span style="font-size: 2.5rem; font-weight: 900; color: #10b981;">56 combinations</span>
+              </div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; text-align: center;">
+                <div>
+                  <div style="font-size: 3rem; font-weight: 900; color: #dc2626;">\(O(N)\)</div>
+                  <div style="color: #fca5a5;">Classical<br><small>56 tests</small></div>
+                </div>
+                <div>
+                  <div style="font-size: 3rem; font-weight: 900; color: #10b981;">\(O(\sqrt{N})\)</div>
+                  <div style="color: #059669;">Double Grover<br><small>~8 tests</small></div>
+                </div>
+              </div>
+              <p style="text-align: center; margin-top: 1.5rem; font-size: 1.1rem; color: #94a3b4;">
+                <strong>7x speedup demonstrated!</strong>
+              </p>
+            </div>
+          </div>
+          <div style="padding: 2rem; background: rgba(59, 130, 246, 0.15); border-radius: 24px;">
+            <h4 style="color: #60a5fa; margin-bottom: 1.5rem;">Your Demo Numbers:</h4>
+            <p style="font-size: 1.15rem; line-height: 1.8;">
+              Find best antibody-docking pair among <strong>56 possibilities</strong>:<br>
+              <br>
+              \( N = 7 \) antibodies, \( M = 8 \) docking sites<br>
+              <br>
+              <strong>Double Grover:</strong> \( \sqrt{N} \times \sqrt{M} \approx 2.65 \times 2.83 = 7.5 \) oracle calls<br>
+              <strong>vs Classical:</strong> \( N \times M = 56 \) oracle calls
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 2: STEP-BY-STEP -->
+      <section style="margin-bottom: 6rem;">
+        <h2 style="font-size: 2.5rem; 
+                background: linear-gradient(135deg, #10b981, #34d399); 
+                background-clip: text;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent; 
+                margin-bottom: 2rem;">
+        ⚛️ Step-by-Step: Double Grover
+        </h2>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-bottom: 3rem;">
+          <div>
+            <h3 style="color: #10b981; font-size: 1.8rem;">1. INNER GROVER (Per Antibody)</h3>
+            <p style="font-size: 1.15rem; line-height: 1.7; margin-bottom: 2rem;">
+              For each antibody, search 8 docking sites:
+            </p>
+            <div style="background: rgba(16, 185, 129, 0.2); padding: 2rem; border-radius: 20px; font-size: 1.1rem;">
+              <strong>Physics Oracle:</strong> Electrostatic + hydrophobic scores<br>
+              \( \text{score}(i) = 0.6 \cdot \text{charge} + 0.3 \cdot \text{hydro} + 0.1 \cdot \text{seq} \)<br>
+              <br>
+              <strong>Example:</strong> Position 4 → \( \text{R(+1)} \leftrightarrow \text{D(-1)} = 0.92 \) (salt bridge!)
+            </div>
+          </div>
+          <div>
+            <h3 style="color: #3b82f6; font-size: 1.8rem;">2. OUTER GROVER (Best Antibody)</h3>
+            <p style="font-size: 1.15rem; line-height: 1.7; margin-bottom: 2rem;">
+              Rank antibodies by their best docking score:
+            </p>
+            <div style="background: rgba(59, 130, 246, 0.2); padding: 2rem; border-radius: 20px; font-size: 1.1rem;">
+              <strong>Ab1:</strong> Best dock = 0.92 → <strong>Marked ✓</strong><br>
+              <strong>Ab2:</strong> Best dock = 0.35 → <strong>Marked ✗</strong><br>
+              <br>
+              \( \text{Threshold} = 75^\text{th} \text{ percentile} = 0.65 \)
+            </div>
+          </div>
+        </div>
+
+        <!-- GROVER ITERATIONS -->
+        <div style="background: linear-gradient(135deg, rgba(30, 27, 75, 0.9), rgba(59, 130, 246, 0.2)); padding: 3rem; border-radius: 28px; border: 1px solid rgba(192, 132, 252, 0.4); margin-bottom: 3rem;">
+          <h4 style="color: #60a5fa; font-size: 1.7rem; margin-bottom: 2rem; text-align: center;">🔄 Grover Iteration (Inner: 8 Docking Sites)</h4>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem;">
+            <div>
+              <div style="font-size: 1.4rem; font-weight: 800; color: #94a3b4; margin-bottom: 0.5rem;">Initial (Uniform)</div>
+              <code style="font-size: 1.1rem;">[0.35, 0.35, 0.35, 0.35, 0.35, 0.35, 0.35, 0.35]</code>
+            </div>
+            <div>
+              <div style="font-size: 1.4rem; font-weight: 800; color: #c084fc;">After Oracle</div>
+              <code style="font-size: 1.1rem;">[-, -, -, -, <strong>+0.85</strong>, -, +, +]</code>
+            </div>
+            <div>
+              <div style="font-size: 1.4rem; font-weight: 800; color: #10b981;">After Diffusion</div>
+              <code style="font-size: 1.1rem;">[...<strong>0.52 @ pos4</strong>...]</code>
+            </div>
+            <div>
+              <div style="font-size: 1.4rem; font-weight: 800; color: #f59e0b;">Final Prob.</div>
+              <code style="font-size: 1.1rem;"><strong>52% → Pos 4 wins!</strong></code>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 3: MATH -->
+      <section style="margin-bottom: 6rem;">
+        
+        <h2 style="font-size: 2.5rem; 
+           background: linear-gradient(135deg, #f59e0b, #fbbf24); 
+           background-clip: text;
+           -webkit-background-clip: text;
+           -webkit-text-fill-color: transparent; 
+           margin-bottom: 2rem;">
+            📐 The Mathematics
+        </h2>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;">
+          <div>
+            <h3 style="color: #f59e0b; font-size: 1.8rem;">Phase Oracle \( Z_f \)</h3>
+            <p style="font-size: 1.15rem; line-height: 1.7; margin-bottom: 2rem;">
+              Marks "good" states by phase flip:
+            </p>
+            $$ Z_f |x\rangle = (-1)^{f(x)} |x\rangle $$
+            <p style="font-size: 1rem; color: #94a3b4; margin-top: 1rem;">
+              Where \( f(x) = 1 \) if score\( (x) \geq \theta \)
+            </p>
+          </div>
+          <div>
+            <h3 style="color: #eab308; font-size: 1.8rem;">Diffusion Operator</h3>
+            <p style="font-size: 1.15rem; line-height: 1.7;">
+              Reflects across average amplitude:
+            </p>
+            $$ D|\psi\rangle = 2\langle\psi| s\rangle |s\rangle - |\psi\rangle $$
+            <p style="font-size: 1rem; color: #94a3b4;">
+              Where \( |s\rangle \) = uniform superposition
+            </p>
+          </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 3rem; padding: 3rem; background: rgba(30, 27, 75, 0.6); border-radius: 28px; border: 1px solid rgba(192, 132, 252, 0.3);">
+          <h4 style="color: #c084fc; font-size: 1.7rem; margin-bottom: 1.5rem;">Optimal Iterations</h4>
+          $$ k_\text{opt} \approx \frac{\pi}{4} \sqrt{\frac{N}{M}} $$
+          <p style="font-size: 1.2rem; margin-top: 1.5rem; color: #94a3b4;">
+            Your demo: \( k = 3 \) iterations → <strong>67% probability on best antibody</strong>
+          </p>
+        </div>
+      </section>
+
+      <!-- SECTION 4: QUANTUM GEOMETRY -->
+      <section>
+        <h2 style="font-size: 2.5rem; 
+           background: linear-gradient(135deg, #ec4899, #f472b6); 
+           background-clip: text;
+           -webkit-background-clip: text;
+           -webkit-text-fill-color: transparent; 
+           margin-bottom: 2rem;">
+        🌀 Quantum Geometry View
+        </h2>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+          <div style="padding: 3rem; background: linear-gradient(135deg, rgba(236, 72, 153, 0.2), rgba(244, 114, 182, 0.15)); border-radius: 28px; border-left: 6px solid #ec4899;">
+            <h4 style="color: #ec4899; margin-bottom: 1.5rem;">Geometric Rotation</h4>
+            <p style="font-size: 1.15rem; line-height: 1.7;">
+              Grover = <strong>rotation in amplitude space</strong>:
+            </p>
+            <ul style="font-size: 1.1rem; line-height: 1.8; margin-top: 1.5rem;">
+              <li><strong>Start:</strong> Uniform superposition (\( \frac{1}{\sqrt{N}} \))</li>
+              <li><strong>Oracle:</strong> Phase flip marked states (\( \theta \to \pi \))</li>
+              <li><strong>Diffusion:</strong> Reflect across average → amplify!</li>
+              <li><strong>Repeat:</strong> \( \frac{\pi}{4\sqrt{N}} \) → solution state</li>
+            </ul>
+          </div>
+          <div style="text-align: center;">
+            <div style="font-size: 4rem; margin-bottom: 2rem;">↻</div>
+            <div style="font-size: 2.5rem; font-weight: 900; 
+            background: linear-gradient(135deg, #10b981, #3b82f6); 
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; 
+            margin-bottom: 1rem;">
+              \( O(\sqrt{N}) \)
+            </div>
+            <p style="font-size: 1.2rem; color: #94a3b4;">
+              <strong>Provably optimal</strong> for unstructured search
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- BACK BUTTON -->
+      <div style="margin-top: 6rem; text-align: center;">
+        <a href="{{ url_for('index') }}" class="button-secondary" style="display: inline-flex; align-items: center; gap: 1rem; background: linear-gradient(135deg, #8b5cf6, #7c3aed); border: none; color: white; padding: 1.5rem 4rem; border-radius: 999px; font-weight: 700; font-size: 1.2rem; text-decoration: none; box-shadow: 0 24px 48px rgba(139, 92, 246, 0.4); transition: all 0.4s ease;">
+          🚀 Back to QuantumAntibody Demo
+        </a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
